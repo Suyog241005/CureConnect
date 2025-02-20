@@ -1,6 +1,7 @@
 // "use client"; // If using Next.js with SSR, uncomment this
 
 import React from "react";
+import { useTranslation } from "react-i18next";
 import './Hero.css' 
 function Card({ icon, title, description, url}) {
   return (
@@ -15,43 +16,14 @@ function Card({ icon, title, description, url}) {
 }
 
 function Cards() {
+  const { t } = useTranslation();
   const cards = [
-    {
-      icon: "📞",
-      title: "TeleMedicine",
-      description: "Smart Telemedicine for Smarter Health",
-      url: "https://example.com/performance"
-    },
-    {
-      icon: "🏥",
-      title: "Medical Analysis",
-      description: "Get Expert Medical Insights Instantly",
-      url: "https://example.com/design"
-    },
-    {
-      icon: "🤖",
-      title: "ChatBot",
-      description: "Your AI-Powered Medical Assistant.",
-      url: "https://example.com/usability"
-    },
-    {
-      icon: "🩺",
-      title: "Consulting",
-      description: "Instant Healthcare, Anytime, Anywhere.",
-      url: "https://example.com/responsive"
-    },
-    {
-      icon: "🚑",
-      title: "Emergency",
-      description: "Your Health, Our Priority – 24/7.",
-      url: "https://example.com/security"
-    },
-    {
-      icon: "🧑🏻‍⚕️",
-      title: "Health-Tips",
-      description: "Personalized Health Tips, Just for You.",
-      url: "https://example.com/innovation"
-    }
+    { icon: "📞", title: t("navbar.telemedicine"), description: t("cards.telemedicine"), url: "#" },
+    { icon: "🏥", title: t("navbar.analysis"), description: t("cards.medical_analysis"), url: "#" },
+    { icon: "🤖", title: t("navbar.chatbot"), description: t("cards.chatbot"), url: "#" },
+    { icon: "🩺", title: t("navbar.consult"), description: t("cards.consulting"), url: "#" },
+    { icon: "🚑", title: "Emergency", description: t("cards.emergency"), url: "#" },
+    { icon: "🧑🏻‍⚕️", title: "Health-Tips", description: t("cards.health_tips"), url: "#" }
   ]
 
   return (

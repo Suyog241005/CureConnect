@@ -1,21 +1,18 @@
-import { useState } from 'react'
-import React from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-import Navbar from './components/Navbar'
-import ThreeDCardDemo from './components/Hero'
+import React, { Suspense } from "react";
+import { useTranslation } from "react-i18next";
+import "./i18";
+import Navbar from "./components/Navbar";
+import Cards from "./components/Hero";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { i18n } = useTranslation();
 
   return (
-    <>
-     <Navbar/>
-     <ThreeDCardDemo/>
-    </>
-  )
+    <div>
+        <Navbar />
+        <Cards />
+      </div>
+  );
 }
 
-export default App
+export default App;

@@ -1,10 +1,16 @@
 import { useState } from "react";
-
+import { useTranslation } from "react-i18next";
 
 import React from 'react'
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (e) => {
+    i18n.changeLanguage(e.target.value);
+  };
+
   const products = [
     {
       id: 1,
@@ -60,13 +66,24 @@ export default function Navbar() {
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-10">
-                  <a href="#" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Dashboard</a>
-                  <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Telemedicine</a>
-                  <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Analysis</a>
-                  <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">ChatBot</a>
-                  <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Consult</a>
+                  <a href="#" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">{t('navbar.dashboard')}</a>
+                  <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.telemedicine')}</a>
+                  <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.analysis')}</a>
+                  <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.chatbot')}</a>
+                  <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.consult')}</a>
                 </div>
               </div>
+              <div className="flex items-center">
+            <select
+              onChange={changeLanguage}
+              value={i18n.language}
+              className="p-2 border border-white-400 rounded-md bg-gray-500 text-white ml-12 text-xs"
+            >
+              <option value="en">English</option>
+              <option value="hi">हिंदी</option>
+              <option value="mr">मराठी</option>
+            </select>
+          </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <button className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white">
@@ -87,10 +104,10 @@ export default function Navbar() {
         {mobileMenuOpen && (
           <div className="sm:hidden" id="mobile-menu">
             <div className="space-y-1 px-2 pt-2 pb-3">
-              <a href="#" className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Dashboard</a>
-              <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
-              <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
-              <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
+              <a href="#" className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">{t('navbar.dashboard')}</a>
+              <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.telemedicine')}</a>
+              <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.analysis')}</a>
+              <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.chatbot')}</a>
             </div>
           </div>
         )}
