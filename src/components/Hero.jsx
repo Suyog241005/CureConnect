@@ -23,7 +23,7 @@ function Cards() {
     { icon: "🤖", title: t("navbar.chatbot"), description: t("cards.chatbot"), url: "#" },
     { icon: "🩺", title: t("navbar.consult"), description: t("cards.consulting"), url: "#" },
     { icon: "🚑", title: "Emergency", description: t("cards.emergency"), url: "#" },
-    { icon: "🧑🏻‍⚕️", title: "Health-Tips", description: t("cards.health_tips"), url: "#" }
+    { icon: "🧑🏻‍⚕️", title: "Book An Appointment", description: t("cards.health_tips"), url: "#" }
   ]
 
   return (
