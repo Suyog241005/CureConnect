@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import xd from '../assets/xd.png'
+import xd from'../assets/xd.png'
 
 import React from 'react'
 

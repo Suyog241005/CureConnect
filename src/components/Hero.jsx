@@ -1,8 +1,8 @@
 // "use client"; // If using Next.js with SSR, uncomment this
-
 import React from "react";
 import { useTranslation } from "react-i18next";
 import './Hero.css' 
+
 function Card({ icon, title, description, url}) {
   return (
     // <div className="card">
@@ -44,4 +44,4 @@ function Cards() {
   )
 }
 
-export default Cards
+export default Cards;
