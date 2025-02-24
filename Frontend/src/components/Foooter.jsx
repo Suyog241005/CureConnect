@@ -13,7 +13,7 @@ function Footer() {
   };
 
   return (
-    <footer style={footerStyle}>
+    <footer style={footerStyle} className='w-screen'>
       <div style={{
         maxWidth: '72rem',
         margin: '0 auto',

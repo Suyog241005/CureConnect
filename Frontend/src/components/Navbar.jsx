@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import xd from'../assets/xd.png'
+import xd from '../assets/xd.png'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout } from '../actions/userActions';
 
 import React from 'react'
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const { user, loading, isAuthenticated } = useSelector(state => state.user);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
@@ -25,20 +29,27 @@ export default function Navbar() {
     // More products...
   ]
 
-// const navigation = [
-//   { name: 'Dashboard', href: '#', current: true },
-//   { name: 'Team', href: '#', current: false },
-//   { name: 'Projects', href: '#', current: false },
-//   { name: 'Calendar', href: '#', current: false },
-// ]
 
-// function classNames(...classes) {
-//   return classes.filter(Boolean).join(' ')
-// }
+
+  const logoutUser = async (e) => {
+    e.preventDefault();
+    dispatch(logout());
+  };
+
+  // const navigation = [
+  //   { name: 'Dashboard', href: '#', current: true },
+  //   { name: 'Team', href: '#', current: false },
+  //   { name: 'Projects', href: '#', current: false },
+  //   { name: 'Calendar', href: '#', current: false },
+  // ]
+
+  // function classNames(...classes) {
+  //   return classes.filter(Boolean).join(' ')
+  // }
 
   return (
-    <div>
-      <nav className="bg-gray-800">
+    <div className="fixed top-0 z-50 mt-6 w-screen px-10">
+      <nav className="bg-gray-800 rounded-2xl">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -63,41 +74,51 @@ export default function Navbar() {
             </div>
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex shrink-0 items-center">
-                <img className="h-8 w-auto" src={xd} alt="Your Company" />
+                <a href="/">
+                  <img className="h-8 w-auto" src={xd} alt="Your Company" />
+                </a>
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-10">
-                  <a href="#" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">{t('navbar.dashboard')}</a>
+                  <a href="/" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">{t('navbar.dashboard')}</a>
                   <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.telemedicine')}</a>
                   <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.analysis')}</a>
                   <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.chatbot')}</a>
-                  <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.consult')}</a>
+                  <a href="/consult" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{t('navbar.consult')}</a>
                 </div>
               </div>
               <div className="flex items-center">
-            <select
-              onChange={changeLanguage}
-              value={i18n.language}
-              className="p-2 border border-white-400 rounded-md bg-gray-500 text-white ml-12 text-xs"
-            >
-              <option value="en">English</option>
-              <option value="hi">हिंदी</option>
-              <option value="mr">मराठी</option>
-            </select>
-          </div>
+                <select
+                  onChange={changeLanguage}
+                  value={i18n.language}
+                  className="p-2 border border-white-400 rounded-md bg-gray-500 text-white ml-12 text-xs"
+                >
+                  <option value="en">English</option>
+                  <option value="hi">हिंदी</option>
+                  <option value="mr">मराठी</option>
+                </select>
+              </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              <button className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white">
-                <span className="sr-only">View notifications</span>
-                <svg className="size-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-                </svg>
-              </button>
               <div className="relative ml-3">
-                <button className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white">
-                  <span className="sr-only">Open user menu</span>
-                  <img className="size-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User" />
-                </button>
+                <a href="/login">
+                  {!isAuthenticated ?
+                    <button className="relative flex rounded-md min-w-6 font-medium bg-white px-2 py-1 bg text-sm focus:ring-2 focus:ring-white">
+                      Login
+                    </button>
+                    :
+                    <button onClick={logoutUser} className="relative flex rounded-md min-w-6 font-medium bg-white px-2 py-1 bg text-sm focus:ring-2 focus:ring-white">
+                      Logout
+                    </button>
+                  }
+                </a>
+              </div>
+              <div className="relative ml-3">
+                <a href="/account">
+                  <div className="relative flex rounded-md w-8 h-8 font-medium bg-white bg text-sm focus:ring-2 focus:ring-white">
+                    <img className="rounded-md" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Image" />
+                  </div>
+                </a>
               </div>
             </div>
           </div>

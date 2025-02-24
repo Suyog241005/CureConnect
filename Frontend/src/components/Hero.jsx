@@ -30,7 +30,6 @@ function Cards() {
 
   return (
     <div className="hero-section">
-      <h1 className="text-2xl font-bold mb-5">Our Features</h1>
       <div className="cards-grid">
         {cards.map((card, index) => (
           <Card
