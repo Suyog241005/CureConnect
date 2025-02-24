@@ -1,0 +1,5 @@
+.bg-custom {
+    background-image: url('../assets/doctor1.webp'); /* Image in public/ folder */
+    background-size: cover;
+    background-position: center;
+  }
