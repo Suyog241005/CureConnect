@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000"); // Adjust to your backend URL
+const socket = io("http://localhost:5001"); // Changed from 5000 to 5001
 
 export default function useChat(userId, role) {
   const [messages, setMessages] = useState([]);
