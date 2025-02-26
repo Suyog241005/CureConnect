@@ -43,8 +43,14 @@ exports.allAppointments = catchAsyncError(async (req, res, next) => {
     let appointments;
     if (req.user.role == 'doctor') {
         appointments = await Appointment.find({ doctor: req.user._id })
+            .populate('patient', 'name email')
+            .populate('doctor', 'name speciality availablity')
+            .sort({ day: -1, time: -1 }); // Most recent appointments first
     } else {
         appointments = await Appointment.find({ patient: req.user._id })
+            .populate('doctor', 'name speciality availablity')
+            .populate('patient', 'name email')
+            .sort({ day: -1, time: -1 }); // Most recent appointments first
     }
 
     if (!appointments || appointments.length === 0) {
@@ -55,10 +61,31 @@ exports.allAppointments = catchAsyncError(async (req, res, next) => {
         });
     }
 
+    // Format appointments for better readability
+    const formattedAppointments = appointments.map(appointment => ({
+        _id: appointment._id,
+        patient: {
+            id: appointment.patient._id,
+            name: appointment.patient.name,
+            email: appointment.patient.email
+        },
+        doctor: {
+            id: appointment.doctor._id,
+            name: appointment.doctor.name,
+            speciality: appointment.doctor.speciality,
+            availability: appointment.doctor.availablity
+        },
+        description: appointment.description,
+        day: appointment.day,
+        time: appointment.time,
+        status: appointment.status,
+        createdAt: appointment.createdAt
+    }));
+
     res.status(200).json({
         success: true,
         count: appointments.length,
-        appointments
+        appointments: formattedAppointments
     });
 });
 

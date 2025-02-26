@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';  // redux-persist for storing data in state
 
 import { allUsersReducer, profileReducer, userDetailsReducer, userReducer } from './reducers/userReducer';
+import { allDoctorsReducer, newAppointmentReducer, myAppointmentReducer } from './reducers/appointmentReducer';
 
 const persistConfig = {
     key: 'root',
@@ -16,7 +17,12 @@ const persistCombineReducer = combineReducers({
     user: userReducer,
     profile: profileReducer,
     allUsers: allUsersReducer,
-    userDetails: userDetailsReducer
+    userDetails: userDetailsReducer,
+    newAppointment: newAppointmentReducer,
+    myAppointment: myAppointmentReducer,
+    // appointmentDetails: appointmentDetailsReducer,
+    // allAppointment: allAppointmentReducer,
+    allDoctors: allDoctorsReducer
 }); // To combine multiple reducers in one
 
 const persistedReducer = persistReducer(persistConfig, persistCombineReducer)

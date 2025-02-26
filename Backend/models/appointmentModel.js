@@ -15,7 +15,6 @@ const appointmentSchema = new mongoose.Schema({
         type: String,
         required: [true, "Description is required"],
         trim: true,
-        minLength: [10, "Description should be at least 10 characters"],
         maxLength: [500, "Description cannot exceed 500 characters"]
     },
     day: {

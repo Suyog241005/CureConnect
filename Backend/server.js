@@ -23,7 +23,7 @@ const user = require('./routes/userRoute')
 app.use("/api/v1", user)
 
 const appointment = require('./routes/appointmentRoutes');
-app.use('/api/appointments', appointment);
+app.use('/api/v1', appointment);
 
 app.use("/", (req, res, next) => {
     res.status(404).json({

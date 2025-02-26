@@ -37,7 +37,7 @@ function Cards() {
             icon={card.icon}
             title={card.title}
             description={card.description}
-            url={card.url}
+            route={card.route}
           />
         ))}
       </div>

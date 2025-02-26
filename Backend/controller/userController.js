@@ -77,7 +77,6 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {}); // TODO :
 // Get User Detail
 exports.getUserDetails = catchAsyncError(async (req, res, next) => {
     const user = await User.findById(req.user._id);
-    console.log(user);
     res.status(200).json({
         success: true,
         user,
@@ -90,13 +89,31 @@ exports.updatePassword = catchAsyncError(async (req, res, next) => {}); // TODO 
 // Update User Details
 exports.updateUserProfile = catchAsyncError(async (req, res, next) => {}); // TODO : ADD IF POSSIBLE
 
-// Get all users --> Admin
-exports.getAllUsers = catchAsyncError(async (req, res, next) => {
-    const users = await User.find()
+// Get all Doctors
+exports.getAllDoctors = catchAsyncError(async (req, res, next) => {
+    const doctors = await User.find({ role: "doctor" }).select("-password");
+
+    // If no doctors found
+    if (!doctors || doctors.length === 0) {
+        return next(new ErrorHander("No doctors found", 404));
+    }
+
+    // Format the response data
+    const formattedDoctors = doctors.map(doctor => ({
+        _id: doctor._id,
+        name: doctor.name,
+        email: doctor.email,
+        speciality: doctor.speciality,
+        availability: doctor.availablity, // Note: Fix typo in model from 'availablity' to 'availability'
+        avatar: doctor.avatar,
+        createdAt: doctor.createdAt
+    }));
+
     res.status(200).json({
         success: true,
-        users: users,
-    })
+        count: doctors.length,
+        doctors: formattedDoctors
+    });
 })
 
 // Get single users --> Admin
