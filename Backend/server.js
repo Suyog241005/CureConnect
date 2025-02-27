@@ -13,7 +13,7 @@ const server = http.createServer(app);
 // Socket.IO setup
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: ["http://localhost:5173", "http://localhost:3000", "http://192.168.31.229:5173"],
         methods: ["GET", "POST"],
         credentials: true
     }
@@ -70,10 +70,11 @@ io.on("connection", (socket) => {
 
 // Middleware
 app.use(cors({
-    origin: "http://localhost:5173", // Frontend URL
-    credentials: true, // Important for cookies
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    origin: ['http://localhost:5173', 'http://localhost:3000', 'http://192.168.31.229:5173'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    optionsSuccessStatus: 200
 }));
 app.use(express.json());
 app.use(cookieParser());
