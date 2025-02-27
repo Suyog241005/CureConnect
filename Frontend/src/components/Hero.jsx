@@ -4,17 +4,25 @@ import { useTranslation } from "react-i18next";
 import './Hero.css' 
 import { useNavigate } from "react-router-dom";
 
-function Card({ icon, title, description, route}) {
-  const navigate=useNavigate();
+function Card({ icon, title, description, route }) {
+  const navigate = useNavigate();
+  
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (route.startsWith('http')) {
+      window.location.href = route;
+    } else {
+      navigate(route);
+    }
+  };
+
   return (
-    // <div className="card">
-      <a onClick={()=>navigate(route)} className="card" target="_blank" rel="noopener noreferrer">
+    <a onClick={handleClick} className="card" style={{ cursor: 'pointer' }}>
       <div className="card-icon">{icon}</div>
       <h3 className="card-title">{title}</h3>
       <p className="card-description">{description}</p>
-      </a>
-    // </div>
-  )
+    </a>
+  );
 }
 
 function Cards() {
@@ -23,9 +31,9 @@ function Cards() {
     { icon: "📞", title: t("navbar.telemedicine"), description: t("cards.telemedicine"), route:"/telemedicine"},
     { icon: "🏥", title: t("navbar.analysis"), description: t("cards.medical_analysis"), route:"/analysis" },
     { icon: "🤖", title: t("navbar.chatbot"), description: t("cards.chatbot"),route:"/chatbot" },
-    { icon: "🩺", title: t("navbar.consult"), description: t("cards.consulting"),route:"/consulting" },
-    { icon: "🚑", title: "Emergency", description: t("cards.emergency"), route:"/emergency" },
-    { icon: "🧑🏻‍⚕️", title: "Book An Appointment", description: t("cards.health_tips"), route:"/appointment" }
+    { icon: "🩺", title: t("navbar.consult"), description: t("cards.consulting"),route:"http://localhost:3000/" },
+    { icon: "🚑", title: t("navbar.emergency"), description: t("cards.emergency"), route:"/emergency" },
+    { icon: "🧑🏻‍⚕️", title: t("navbar.appointment"), description: t("cards.appointment"), route:"/appointment" }
   ]
 
   return (

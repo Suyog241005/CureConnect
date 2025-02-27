@@ -1,17 +1,19 @@
 {
-    "navbar": {
-      "dashboard": "Dashboard",
-      "telemedicine": "Telemedicine",
-      "analysis": "Analysis",
-      "chatbot": "ChatBot",
-      "consult": "Consult"
-    },
-    "cards": {
-      "telemedicine": "Smart Telemedicine for Smarter Health",
-      "medical_analysis": "Get Expert Medical Insights Instantly",
-      "chatbot": "Your AI-Powered Medical Assistant.",
-      "consulting": "Instant Healthcare, Anytime, Anywhere.",
-      "emergency": "Your Health, Our Priority – 24/7.",
-      "health_tips": "Personalized Health Tips, Just for You."
-    }
+  "navbar": {
+    "dashboard": "Dashboard",
+    "telemedicine": "Telemedicine",
+    "analysis": "Analysis",
+    "chatbot": "ChatBot",
+    "consult": "Consult",
+    "appointment":"appointment",
+    "emergency":"emergency"
+  },
+  "cards": {
+    "telemedicine": "Smart Telemedicine for Smarter Health",
+    "medical_analysis": "Get Expert Medical Insights Instantly",
+    "chatbot": "Your AI-Powered Medical Assistant.",
+    "consulting": "Instant Healthcare, Anytime, Anywhere.",
+    "emergency": "Your Health, Our Priority – 24/7.",
+    "appointment": "Personalized Health Tips, Just for You."
   }
+}

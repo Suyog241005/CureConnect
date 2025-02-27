@@ -70,10 +70,10 @@ io.on("connection", (socket) => {
 
 // Middleware
 app.use(cors({
-    origin: "http://localhost:5173", // Frontend URL
-    credentials: true, // Important for cookies
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    origin: ['http://localhost:5173', 'http://localhost:3000'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
 }));
 app.use(express.json());
 app.use(cookieParser());

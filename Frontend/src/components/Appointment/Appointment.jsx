@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, Clock, MapPin, Users, CalendarCheck, UserPlus, Mail } from 'lucide-react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, allDoctors } from '../../actions/appointmentActions';
 import BookingModal from './BookingModal'
@@ -9,7 +8,6 @@ import BookingModal from './BookingModal'
 const Appointment = () => {
     const [activeTab, setActiveTab] = useState('book');
     const [selectedDoctor, setSelectedDoctor] = useState(null);
-    const navigate = useNavigate()
 
     const dispatch = useDispatch();
 
@@ -19,9 +17,6 @@ const Appointment = () => {
     useEffect(() => {
         if (error) {
             dispatch(clearErrors())
-        }
-        if (user.role == "doctor") {
-            navigate('/myappointments');
         }
         dispatch(allDoctors());
 
@@ -99,13 +94,13 @@ const Appointment = () => {
                 )}
             </main>
 
-            {selectedDoctor && (
-                <BookingModal
-                    doctor={selectedDoctor}
-                    isOpen={true}
-                    onClose={() => setSelectedDoctor(null)}
-                />
-            )}
+      {selectedDoctor && (
+        <BookingModal
+          doctor={selectedDoctor}
+          isOpen={true}
+          onClose={() => setSelectedDoctor(null)}
+        />
+      )}
         </div>
     );
 };

@@ -8,11 +8,14 @@ import Layout from "./components/Layout";
 import Appointment from "./components/Appointment/Appointment";
 import MyAppointment from "./components/Appointment/MyAppointment";
 import LoginSignup from "./components/User/LoginSignup";
+import FinalEmergency from "./pages/FinalEmergency";
 import Profile from "./components/User/Profile.jsx";
 import VideoCall from "./components/VideoCall.jsx";
+import ChatBotButton from "./components/ChatBotButton.jsx";
 import { loadUser } from './actions/userActions.js';
 import { useSelector } from 'react-redux';
 import { persistReduxStore } from './store.js'
+import AnalysisBot from "./pages/AnalysisBot.jsx";
 
 function App() {
 
@@ -28,6 +31,8 @@ function App() {
       <div className="pt-28 w-full">
         <Routes>
           <Route path='/' element={<Layout />}></Route>
+          <Route path='/analysis' element={<AnalysisBot />}></Route>
+          <Route path='/emergency' element={<FinalEmergency />}></Route>
           <Route path='/telemedicine' element={<VideoCall />}></Route>
           <Route path='/appointment' element={<Appointment />}></Route>
           <Route exact path='/login' element={<LoginSignup />} />
@@ -35,6 +40,7 @@ function App() {
           <Route exact path='/myappointments' element={<MyAppointment />} />
         </Routes>
         <Footer />
+        <ChatBotButton/>
       </div>
     </div>
   );
