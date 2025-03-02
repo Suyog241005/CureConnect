@@ -5,6 +5,9 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const catchAsyncError = require("../middleware/catchAsyncError");
 
+const generateRoomId = () => {
+    return Math.random().toString(36).substring(2, 12);
+};
 
 exports.newAppointment = catchAsyncError(async (req, res, next) => {
     const { doctor, description, day, time } = req.body;
@@ -16,6 +19,7 @@ exports.newAppointment = catchAsyncError(async (req, res, next) => {
     if (!doctorExists) {
         return next(new ErrorHander("Doctor not found", 404));
     }
+
     const existingAppointment = await Appointment.findOne({
         doctor,
         day,
@@ -25,13 +29,47 @@ exports.newAppointment = catchAsyncError(async (req, res, next) => {
         return next(new ErrorHander("This time slot is already booked", 400));
     }
 
+    // Generate a random roomId
+    const roomId = generateRoomId();
+
     const appointment = await Appointment.create({
         patient: req.user._id,
         doctor,
         description,
         day,
-        time
+        time,
+        roomId // Add the roomId to the appointment
     });
+
+    const message = `
+    Dear ${req.user.name},
+
+    Your appointment has been successfully scheduled with Dr. ${doctorExists.name}.
+
+    Appointment Details:
+    -------------------
+    Date: ${day}
+    Time: ${time}
+    Doctor: Dr. ${doctorExists.name}
+    Speciality: ${doctorExists.speciality}
+    Description: ${description}
+    Room ID: ${roomId}
+
+    Please arrive 10 minutes before your scheduled appointment time.
+    If you need to reschedule or cancel your appointment, please do so at least 24 hours in advance.
+
+    Best regards,
+    TeleConnect Team
+    `;
+    try {
+        await sendEmail({
+            email: req.user.email,
+            subject: `Welcome to TeleConnect`,
+            message,
+        });
+    } catch (error) {
+        return next(new ErrorHander(error.message, 500));
+    }
 
     res.status(201).json({
         success: true,
@@ -79,6 +117,7 @@ exports.allAppointments = catchAsyncError(async (req, res, next) => {
         day: appointment.day,
         time: appointment.time,
         status: appointment.status,
+        roomId: appointment.roomId, // Add roomId to the response
         createdAt: appointment.createdAt
     }));
 

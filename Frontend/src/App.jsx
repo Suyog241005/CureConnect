@@ -16,6 +16,8 @@ import { loadUser } from './actions/userActions.js';
 import { useSelector } from 'react-redux';
 import { persistReduxStore } from './store.js'
 import AnalysisBot from "./pages/AnalysisBot.jsx";
+import AnalysisBotECG from "./pages/AnalysisBotECG.jsx";
+import AnalysisBotXRAY from "./pages/AnalysisBotXRAY.jsx";
 import HealthTips from "./components/HealthTips.jsx"
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Layout />}></Route>
           <Route path='/analysis' element={<AnalysisBot />}></Route>
+          <Route path='/analysis/ecg' element={<AnalysisBotECG />}></Route>
+          <Route path='/analysis/xray' element={<AnalysisBotXRAY />}></Route>
           <Route path='/emergency' element={<FinalEmergency />}></Route>
           <Route path='/health' element={<HealthTips/>}></Route>
           <Route path='/telemedicine' element={<VideoCall />}></Route>

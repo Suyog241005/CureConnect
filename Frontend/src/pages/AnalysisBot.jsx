@@ -1,106 +1,45 @@
-import { useState, useRef } from 'react';
-import axios from 'axios';
-import Header from '../components/Header';
-import ImageUpload from '../components/ImageUpload';
-import AnalysisResults from '../components/AnalysisResults';
-import Disclaimer from '../components/Disclaimer';
+import React from 'react'
+import { FileX2, Activity } from 'lucide-react';
 
-function AnalysisBot() {
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [isAnalyzing, setIsAnalyzing] = useState(false);
-    const [analysis, setAnalysis] = useState(null);
-    const fileInputRef = useRef(null);
-
-    const uploadToCloudinary = async (file) => {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', 'teleconnect'); // Replace with your upload preset
-
-        try {
-            const response = await axios.post(
-                'https://api.cloudinary.com/v1_1/dfwzeazkg/image/upload', // Replace with your cloud name
-                formData
-            );
-            return response.data.secure_url;
-        } catch (error) {
-            console.error('Error uploading to Cloudinary:', error);
-            throw error;
-        }
+const AnalysisBot = () => {
+    const handleXRayAnalysis = () => {
+        window.location.href = '/analysis/xray';
+        // You can replace this with your actual X-ray analysis page URL
     };
 
-    const handleImageUpload = async (event) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            try {
-                const reader = new FileReader();
-                reader.onloadend = () => setSelectedImage(reader.result);
-                reader.readAsDataURL(file);
-
-                // Upload to Cloudinary first
-                const cloudinaryUrl = await uploadToCloudinary(file);
-                await analyzeImage(cloudinaryUrl);
-            } catch (error) {
-                console.error('Error handling image upload:', error);
-                setAnalysis("Error uploading image.");
-            }
-        }
+    const handleECGAnalysis = () => {
+        window.location.href = '/analysis/ecg';
+        // You can replace this with your actual ECG analysis page URL
     };
-
-    const analyzeImage = async (imageUrl) => {
-        setIsAnalyzing(true);
-        setAnalysis(null);
-
-        try {
-            const response = await fetch('http://192.168.198.32:8000/model', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ file_path: imageUrl }), // Ensure JSON format
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                setAnalysis(data.prediction);
-            } else {
-                setAnalysis("Error: " + (data.error || "Unexpected response"));
-            }
-        } catch (error) {
-            console.error('Error processing the image:', error);
-            setAnalysis("Error processing the image.");
-        } finally {
-            setIsAnalyzing(false);
-        }
-    };
-
-    const resetAnalysis = () => {
-        setSelectedImage(null);
-        setAnalysis(null);
-        if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-        }
-    };
-
     return (
-        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-            <div className="max-w-4xl mx-auto px-4 py-8">
-                <Header />
-                <div className="bg-white rounded-2xl shadow-xl p-6 mb-8">
-                    <ImageUpload
-                        selectedImage={selectedImage}
-                        fileInputRef={fileInputRef}
-                        handleImageUpload={handleImageUpload}
-                        resetAnalysis={resetAnalysis}
-                    />
-                    <AnalysisResults
-                        isAnalyzing={isAnalyzing}
-                        analysis={analysis}
-                    />
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+            <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
+                <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Medical Analysis Portal</h1>
+
+                <div className="space-y-4">
+                    <button
+                        onClick={handleXRayAnalysis}
+                        className="w-full flex items-center justify-center gap-3 bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+                    >
+                        <FileX2 size={20} />
+                        <span className="font-medium">X-Ray Analysis</span>
+                    </button>
+
+                    <button
+                        onClick={handleECGAnalysis}
+                        className="w-full flex items-center justify-center gap-3 bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+                    >
+                        <Activity size={20} />
+                        <span className="font-medium">ECG Analysis</span>
+                    </button>
                 </div>
-                <Disclaimer />
+
+                <p className="mt-6 text-sm text-gray-500 text-center">
+                    Select an analysis type to proceed with your medical diagnostics
+                </p>
             </div>
         </div>
-    );
+    )
 }
 
-export default AnalysisBot;
+export default AnalysisBot

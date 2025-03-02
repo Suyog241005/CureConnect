@@ -48,7 +48,7 @@ const MyAppointment = () => {
                                 <p className="text-sm text-gray-600">{appt.doctor.speciality}</p>
                             </div>
                             <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[appt.status]}`}>
-                                {appt.status.charAt(0).toUpperCase() + appt.status.slice(1)}
+                                RoomId: {appt.roomId}
                             </span>
                         </div>
 

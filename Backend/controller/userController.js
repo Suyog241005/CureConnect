@@ -21,16 +21,16 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
         },
     });
 
-    // const message = `Welcome to TeleConnect \n If you have not registered this email then, please ignore it.`;
-    // try {
-    //     await sendEmail({
-    //         email: user.email,
-    //         subject: `Welcome to TeleConnect`,
-    //         message,
-    //     });
-    // } catch (error) {
-    //     return next(new ErrorHander(error.message, 500));
-    // }
+    const message = `Welcome to TeleConnect ${name}`;
+    try {
+        await sendEmail({
+            email: user.email,
+            subject: `Welcome to TeleConnect`,
+            message,
+        });
+    } catch (error) {
+        return next(new ErrorHander(error.message, 500));
+    }
 
     sendToken(user, 201, res);
 });

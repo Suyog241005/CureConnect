@@ -6,6 +6,9 @@ import { logout } from '../actions/userActions';
 
 import React from 'react'
 
+// Add this after the imports
+const CONSULT_URL = 'http://localhost:3000/';
+
 export default function Navbar() {
   const dispatch = useDispatch();
   const { user, loading, isAuthenticated } = useSelector(state => state.user);
@@ -31,10 +34,10 @@ export default function Navbar() {
         </div>
         <div className="hidden md:flex space-x-6">
           <a href="/" className="text-white hover:text-gray-300">{t('navbar.dashboard')}</a>
-          <a href="#" className="text-white hover:text-gray-300">{t('navbar.telemedicine')}</a>
-          <a href="#" className="text-white hover:text-gray-300">{t('navbar.analysis')}</a>
-          <a href="#" className="text-white hover:text-gray-300">{t('navbar.health_tips')}</a>
-          <a href="/consult" className="text-white hover:text-gray-300">{t('navbar.consult')}</a>
+          <a href="/telemedicine" className="text-white hover:text-gray-300">{t('navbar.telemedicine')}</a>
+          <a href="/analysis" className="text-white hover:text-gray-300">{t('navbar.analysis')}</a>
+          <a href="/health" className="text-white hover:text-gray-300">{t('navbar.health_tips')}</a>
+          <a href={CONSULT_URL} className="text-white hover:text-gray-300">{t('navbar.consult')}</a>
         </div>
         <div className="hidden md:flex items-center space-x-4">
           <select
@@ -45,6 +48,7 @@ export default function Navbar() {
             <option value="en">English</option>
             <option value="hi">हिंदी</option>
             <option value="mr">मराठी</option>
+            <option value="kn">ಕನ್ನಡ</option>
           </select>
           {!isAuthenticated ? (
             <a href="/login" className="bg-white text-gray-800 px-3 py-1 rounded-md text-sm font-medium">Login</a>
@@ -68,7 +72,7 @@ export default function Navbar() {
           <a href="#" className="block py-2">{t('navbar.telemedicine')}</a>
           <a href="#" className="block py-2">{t('navbar.analysis')}</a>
           <a href="#" className="block py-2">{t('navbar.health_tips')}</a>
-          <a href="/consult" className="block py-2">{t('navbar.consult')}</a>
+          <a href={CONSULT_URL} className="block py-2">{t('navbar.consult')}</a>
           <div className="flex justify-between items-center py-2">
             <select
               onChange={changeLanguage}
@@ -78,6 +82,7 @@ export default function Navbar() {
               <option value="en">English</option>
               <option value="hi">हिंदी</option>
               <option value="mr">मराठी</option>
+              <option value="kn">ಕನ್ನಡ</option>
             </select>
             {!isAuthenticated ? (
               <a href="/login" className="bg-white text-gray-800 px-3 py-1 rounded-md text-sm font-medium">Login</a>
