@@ -73,7 +73,7 @@ MediConnect is a comprehensive telemedicine platform designed to bridge the gap 
 - **Affordability**: Reduce costs associated with in-person visits
 - **Efficiency**: Save time with quick access to healthcare professionals
 - **Comprehensive Care**: All your healthcare needs addressed on a single platform
-- **Data Security**: Your medical information is protected with state-of-the-art security measures
+- **Data Security**: Your medical information is protected with state-of-the-art security measures.
 
 ## Get Started Today
 
