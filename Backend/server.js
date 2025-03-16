@@ -21,27 +21,36 @@ io.on("connection", (socket) => {
         if (roomClients.size < 2) {
             socket.join(roomId);
             console.log(`User ${socket.id} joined room ${roomId}`);
-            socket.to(roomId).emit("user-joined", socket.id);
+            socket.to(roomId).emit("user-joined");
         } else {
             socket.emit("room-full");
         }
     });
 
     socket.on("offer", ({ roomId, offer }) => {
+        console.log(`Offer sent from ${socket.id} to room ${roomId}`);
         socket.to(roomId).emit("offer", { senderId: socket.id, offer });
     });
 
     socket.on("answer", ({ roomId, answer }) => {
-        socket.to(roomId).emit("answer", { senderId: socket.id, answer });
+        console.log(`Answer sent from ${socket.id} to room ${roomId}`);
+        socket.to(roomId).emit("answer", { answer });
     });
 
     socket.on("ice-candidate", ({ roomId, candidate }) => {
-        socket.to(roomId).emit("ice-candidate", { senderId: socket.id, candidate });
+        console.log(`ICE Candidate received from ${socket.id} for room ${roomId}`);
+        socket.to(roomId).emit("ice-candidate", { candidate });
+    });
+
+    socket.on("disconnecting", () => {
+        console.log(`User ${socket.id} disconnecting from rooms:`, [...socket.rooms]);
+        socket.rooms.forEach((roomId) => {
+            socket.to(roomId).emit("user-disconnected", socket.id);
+        });
     });
 
     socket.on("disconnect", () => {
         console.log(`User disconnected: ${socket.id}`);
-        io.emit("user-disconnected", socket.id);
     });
 });
 

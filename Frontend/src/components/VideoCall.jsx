@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 
-const socket = io("http://192.168.1.100:5001"); // Replace with your local IP
+const socket = io("http://192.168.1.100:5001"); // Replace with your server IP
 
 export default function VideoCall() {
     const [roomId, setRoomId] = useState("");
@@ -19,24 +19,28 @@ export default function VideoCall() {
             await createOffer();
         });
 
-        socket.on("offer", async ({ senderId, offer }) => {
+        socket.on("offer", async ({ offer }) => {
             console.log("Received offer, creating answer...");
-            if (!peerConnectionRef.current) setupPeerConnection();
-
+            if (!peerConnectionRef.current) await setupPeerConnection(); // Ensure setup before using
+            
             await peerConnectionRef.current.setRemoteDescription(new RTCSessionDescription(offer));
             const answer = await peerConnectionRef.current.createAnswer();
             await peerConnectionRef.current.setLocalDescription(answer);
             socket.emit("answer", { roomId, answer });
         });
 
-        socket.on("answer", ({ answer }) => {
+        socket.on("answer", async ({ answer }) => {
             console.log("Received answer");
-            peerConnectionRef.current?.setRemoteDescription(new RTCSessionDescription(answer));
+            if (peerConnectionRef.current) {
+                await peerConnectionRef.current.setRemoteDescription(new RTCSessionDescription(answer));
+            }
         });
 
-        socket.on("ice-candidate", ({ candidate }) => {
+        socket.on("ice-candidate", async ({ candidate }) => {
             console.log("Received ICE candidate");
-            peerConnectionRef.current?.addIceCandidate(new RTCIceCandidate(candidate));
+            if (peerConnectionRef.current) {
+                await peerConnectionRef.current.addIceCandidate(new RTCIceCandidate(candidate));
+            }
         });
 
         return () => {
@@ -50,8 +54,8 @@ export default function VideoCall() {
     const joinRoom = async () => {
         if (!roomId) return alert("Enter a Room ID!");
         setInCall(true);
-        socket.emit("join-room", roomId);
         await setupLocalStream();
+        socket.emit("join-room", roomId);
     };
 
     const setupLocalStream = async () => {
@@ -65,8 +69,10 @@ export default function VideoCall() {
         }
     };
 
-    const setupPeerConnection = () => {
-        peerConnectionRef.current = new RTCPeerConnection(servers);
+    const setupPeerConnection = async () => {
+        if (!peerConnectionRef.current) {
+            peerConnectionRef.current = new RTCPeerConnection(servers);
+        }
 
         peerConnectionRef.current.onicecandidate = (event) => {
             if (event.candidate) {
@@ -76,16 +82,22 @@ export default function VideoCall() {
 
         peerConnectionRef.current.ontrack = (event) => {
             console.log("Receiving remote stream");
-            if (remoteVideoRef.current) remoteVideoRef.current.srcObject = event.streams[0];
+            if (remoteVideoRef.current && !remoteVideoRef.current.srcObject) {
+                remoteVideoRef.current.srcObject = event.streams[0];
+            }
         };
 
-        localStreamRef.current.getTracks().forEach(track => {
-            peerConnectionRef.current.addTrack(track, localStreamRef.current);
-        });
+        if (localStreamRef.current) {
+            localStreamRef.current.getTracks().forEach(track => {
+                peerConnectionRef.current.addTrack(track, localStreamRef.current);
+            });
+        } else {
+            console.error("Local stream is not set up yet!");
+        }
     };
 
     const createOffer = async () => {
-        setupPeerConnection();
+        await setupPeerConnection();
         const offer = await peerConnectionRef.current.createOffer();
         await peerConnectionRef.current.setLocalDescription(offer);
         socket.emit("offer", { roomId, offer });
