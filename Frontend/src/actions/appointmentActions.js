@@ -14,7 +14,7 @@ export const createAppointment = (doctorId, day, time, description) => async (di
         const { data } = await axios.post(
             '/appointment/new',
             { 
-                doctor: "67bb3bea79689932fa018829",
+                doctor: doctorId,
                 description,
                 day,
                 time 

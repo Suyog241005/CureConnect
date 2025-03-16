@@ -31,9 +31,9 @@ export default function Navbar() {
         </div>
         <div className="hidden md:flex space-x-6">
           <a href="/" className="text-white hover:text-gray-300">{t('navbar.dashboard')}</a>
-          <a href="#" className="text-white hover:text-gray-300">{t('navbar.telemedicine')}</a>
-          <a href="#" className="text-white hover:text-gray-300">{t('navbar.analysis')}</a>
-          <a href="#" className="text-white hover:text-gray-300">{t('navbar.health_tips')}</a>
+          <a href="/telemedicine" className="text-white hover:text-gray-300">{t('navbar.telemedicine')}</a>
+          <a href="/analysis" className="text-white hover:text-gray-300">{t('navbar.analysis')}</a>
+          <a href="health" className="text-white hover:text-gray-300">{t('navbar.health_tips')}</a>
           <a href="/consult" className="text-white hover:text-gray-300">{t('navbar.consult')}</a>
         </div>
         <div className="hidden md:flex items-center space-x-4">
@@ -45,6 +45,7 @@ export default function Navbar() {
             <option value="en">English</option>
             <option value="hi">हिंदी</option>
             <option value="mr">मराठी</option>
+            <option value="kn">ಕನ್ನಡ</option>
           </select>
           {!isAuthenticated ? (
             <a href="/login" className="bg-white text-gray-800 px-3 py-1 rounded-md text-sm font-medium">Login</a>
@@ -78,6 +79,7 @@ export default function Navbar() {
               <option value="en">English</option>
               <option value="hi">हिंदी</option>
               <option value="mr">मराठी</option>
+              <option value="kn">ಕನ್ನಡ</option>
             </select>
             {!isAuthenticated ? (
               <a href="/login" className="bg-white text-gray-800 px-3 py-1 rounded-md text-sm font-medium">Login</a>

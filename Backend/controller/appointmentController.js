@@ -33,6 +33,35 @@ exports.newAppointment = catchAsyncError(async (req, res, next) => {
         time
     });
 
+    const message = `
+    Dear ${req.user.name},
+
+    Your appointment has been successfully scheduled with Dr. ${doctorExists.name}.
+
+    Appointment Details:
+    -------------------
+    Date: ${day}
+    Time: ${time}
+    Doctor: Dr. ${doctorExists.name}
+    Speciality: ${doctorExists.speciality}
+    Description: ${description}
+
+    Please arrive 10 minutes before your scheduled appointment time.
+    If you need to reschedule or cancel your appointment, please do so at least 24 hours in advance.
+
+    Best regards,
+    TeleConnect Team
+    `;
+    try {
+        await sendEmail({
+            email: req.user.email,
+            subject: "Welcome to TeleConnect",
+            message,
+        });
+    } catch (error) {
+        return next(new ErrorHander(error.message, 500));
+    }
+
     res.status(201).json({
         success: true,
         appointment

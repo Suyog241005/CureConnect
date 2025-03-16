@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { persistReduxStore } from './store.js'
 import AnalysisBot from "./pages/AnalysisBot.jsx";
 import HealthTips from "./components/HealthTips.jsx"
+// import ChatApp from "./components/SocketChat.jsx";
 
 function App() {
 
@@ -31,13 +32,14 @@ function App() {
       <Navbar />
       <div className="pt-28 w-full">
         <Routes>
-          <Route path='/' element={<Layout />}></Route>
+          <Route exact path='/' element={<Layout />}></Route>
           <Route path='/analysis' element={<AnalysisBot />}></Route>
           <Route path='/emergency' element={<FinalEmergency />}></Route>
           <Route path='/health' element={<HealthTips/>}></Route>
           <Route path='/telemedicine' element={<VideoCall />}></Route>
           <Route path='/appointment' element={<Appointment />}></Route>
           <Route exact path='/login' element={<LoginSignup />} />
+          {/* <Route  path="/consulting" element={<ChatApp/>}></Route> */}
           <Route exact path='/account' element={<Profile user={user} />} />
           <Route exact path='/myappointments' element={<MyAppointment />} />
         </Routes>
