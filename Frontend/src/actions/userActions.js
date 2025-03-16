@@ -48,8 +48,6 @@ export const register = (email, password, name, role, speciality, availability) 
 
 export const loadUser = () => async (dispatch) => {
     try {
-        dispatch({ type: LOAD_USER_REQUEST });
-
         const { data } = await axios.get(`/me`);
         dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
     } catch (error) {
