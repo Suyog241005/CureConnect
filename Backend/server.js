@@ -68,6 +68,44 @@ io.on("connection", (socket) => {
     });
 });
 
+// Chat rooms storage
+const chatRooms = new Map();
+
+io.of('/chat').on("connection", (socket) => {
+    console.log("Chat user connected:", socket.id);
+    
+    socket.on("join-room", (roomId) => {
+        if (!chatRooms.has(roomId)) {
+            chatRooms.set(roomId, new Set([socket.id]));
+        } else if (chatRooms.get(roomId).size < 2) {
+            chatRooms.get(roomId).add(socket.id);
+        } else {
+            socket.emit("room-full");
+            return;
+        }
+
+        socket.join(roomId);
+        console.log(`Chat user ${socket.id} joined room ${roomId}`);
+    });
+
+    socket.on("user-message", ({ roomId, text }) => {
+        io.of('/chat').to(roomId).emit("message", {
+            text,
+            sender: socket.id
+        });
+    });
+
+    socket.on("disconnect", () => {
+        console.log("Chat user disconnected:", socket.id);
+        chatRooms.forEach((users, roomId) => {
+            users.delete(socket.id);
+            if (users.size === 0) {
+                chatRooms.delete(roomId);
+            }
+        });
+    });
+});
+
 // Middleware
 app.use(cors({
     origin: ['http://localhost:5173', 'http://localhost:3000', 'http://192.168.31.229:5173'],

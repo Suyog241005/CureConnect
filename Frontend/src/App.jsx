@@ -19,6 +19,7 @@ import AnalysisBot from "./pages/AnalysisBot.jsx";
 import AnalysisBotECG from "./pages/AnalysisBotECG.jsx";
 import AnalysisBotXRAY from "./pages/AnalysisBotXRAY.jsx";
 import HealthTips from "./components/HealthTips.jsx"
+import Chat from "./components/Chat/Chat.jsx"
 
 function App() {
 
@@ -31,7 +32,7 @@ function App() {
   return (
     <div className="flex items-center flex-col">
       <Navbar />
-      <div className="pt-28 w-full">
+      <div className="pt-20 w-full">
         <Routes>
           <Route path='/' element={<Layout />}></Route>
           <Route path='/analysis' element={<AnalysisBot />}></Route>
@@ -39,6 +40,7 @@ function App() {
           <Route path='/analysis/xray' element={<AnalysisBotXRAY />}></Route>
           <Route path='/emergency' element={<FinalEmergency />}></Route>
           <Route path='/health' element={<HealthTips/>}></Route>
+          <Route path='/chat' element={<Chat/>}></Route>
           <Route path='/telemedicine' element={<VideoCall />}></Route>
           <Route path='/appointment' element={<Appointment />}></Route>
           <Route exact path='/login' element={<LoginSignup />} />
