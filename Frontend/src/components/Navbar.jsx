@@ -25,7 +25,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="fixed top-0 z-50 w-full bg-gray-800 shadow-lg">
+    <div className="font-sans bg-gray-50 text-gray-900">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
         <div className="flex items-center">
           <a href="/">
@@ -33,11 +33,11 @@ export default function Navbar() {
           </a>
         </div>
         <div className="hidden md:flex space-x-6">
-          <a href="/" className="text-white hover:text-gray-300">{t('navbar.dashboard')}</a>
-          <a href="/telemedicine" className="text-white hover:text-gray-300">{t('navbar.telemedicine')}</a>
-          <a href="/analysis" className="text-white hover:text-gray-300">{t('navbar.analysis')}</a>
-          <a href="/health" className="text-white hover:text-gray-300">{t('navbar.health_tips')}</a>
-          <a href={CONSULT_URL} className="text-white hover:text-gray-300">{t('navbar.consult')}</a>
+          <a href="/" className="hover:text-blue-600 cursor-pointer text-xl">{t('navbar.dashboard')}</a>
+          <a href="/telemedicine" className="hover:text-blue-600 cursor-pointer text-xl">{t('navbar.telemedicine')}</a>
+          <a href="/analysis" className="hover:text-blue-600 cursor-pointer text-xl">{t('navbar.analysis')}</a>
+          <a href="/health" className="hover:text-blue-600 cursor-pointer text-xl">{t('navbar.health_tips')}</a>
+          <a href={CONSULT_URL} className="hover:text-blue-600 cursor-pointer text-xl">{t('navbar.consult')}</a>
         </div>
         <div className="hidden md:flex items-center space-x-4">
           <select

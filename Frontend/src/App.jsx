@@ -20,6 +20,9 @@ import AnalysisBotECG from "./pages/AnalysisBotECG.jsx";
 import AnalysisBotXRAY from "./pages/AnalysisBotXRAY.jsx";
 import HealthTips from "./components/HealthTips.jsx"
 import Chat from "./components/Chat/Chat.jsx"
+import Cards from "./components/Hero.jsx";
+import Landing from "./pages/Landing.jsx";
+
 
 function App() {
 
@@ -31,10 +34,10 @@ function App() {
 
   return (
     <div className="flex items-center flex-col">
-      <Navbar />
-      <div className="pt-20 w-full">
+      {/* <Navbar /> */}
+      <div className=" w-full">
         <Routes>
-          <Route path='/' element={<Layout />}></Route>
+          <Route path='/' element={<Landing />}></Route>
           <Route path='/analysis' element={<AnalysisBot />}></Route>
           <Route path='/analysis/ecg' element={<AnalysisBotECG />}></Route>
           <Route path='/analysis/xray' element={<AnalysisBotXRAY />}></Route>
@@ -47,7 +50,7 @@ function App() {
           <Route exact path='/account' element={<Profile user={user} />} />
           <Route exact path='/myappointments' element={<MyAppointment />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
         <ChatBotButton/>
       </div>
     </div>
@@ -55,3 +58,10 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
